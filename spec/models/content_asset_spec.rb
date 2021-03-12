@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe ContentAsset, type: :model do
-  describe "with an attached file" do
+  describe "with a valid attached file" do
     subject { ContentAsset.new }
 
     before(:each) do
@@ -13,6 +13,26 @@ RSpec.describe ContentAsset, type: :model do
 
     it "has a file attached" do
       expect(subject.asset_file).to be_attached
+    end
+  end
+
+  describe "with a file with the wrong extension" do
+    let(:asset_file) { fixture_file_upload("spec/fixtures/sample.jpeg")}
+
+    it 'is not valid' do
+      expect(subject.save).to be false
+    end
+
+    it 'has the correct error message' do
+      asset = ContentAsset.new(title: "Some Content")
+      asset.save!
+      expect(asset).to have no_errors  
+    end
+  end
+
+  describe "with infected file" do
+    subject { ContentAsset.new }
+    before(:each) do
     end
   end
 
