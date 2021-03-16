@@ -50,3 +50,6 @@ COPY package.json yarn.lock ./
 RUN yarn install
 
 COPY . /app/
+
+RUN echo "TCPSocket 3310" > clamd.conf
+RUN echo "TCPAddr av" > clamd.conf

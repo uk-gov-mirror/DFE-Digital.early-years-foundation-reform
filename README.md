@@ -75,6 +75,16 @@ You can manually set a password for the user `boilerplate_user` by following the
 2. in the postgres cli run `\password`
 3. set the `DATABASE_PASSWORD` from `.env`
 
+## Antivirus
+
+We use (clamav)[https://clamav.net] to scan files for viruses
+
+To install locally:
+
+`brew install clamav`
+
+Follow the instructions 
+
 ## Styling pages
 
 See [this guide](https://design-system.service.gov.uk/get-started/) for

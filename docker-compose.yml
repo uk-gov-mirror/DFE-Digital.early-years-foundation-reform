@@ -1,22 +1,31 @@
 version: "3.8"
 
-volumes:
-  db_data:
-
 services:
+  av:
+    image: mkodockx/docker-clamav:alpine
+    restart: unless-stopped
+    container_name: eyfs_av
+    ports:
+      - "3310:3310"
+    volumes:
+      - clam:/var/lib/clamav
   app:
     build:
       context: .
       dockerfile: Dockerfile.dev
     image: eyfs-reform-spike-web:latest
+    container_name: eyfs_app
     command: ./entrypoints/docker-entrypoint.sh
     depends_on:
       - database
+      - av
     ports:
       - "3000:3000"
     volumes:
       - .:/app
     env_file: .env
+    environment:
+      WEBPACKER_DEV_SERVER_HOST: webpack
 
   database:
     image: postgres:13.1
@@ -37,3 +46,9 @@ services:
     ports:
       - '3035:3035'
     env_file: .env
+    environment:
+      WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
+
+volumes:
+  db_data:
+  clam:

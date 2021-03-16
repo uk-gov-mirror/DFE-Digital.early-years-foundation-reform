@@ -52,4 +52,7 @@ RUN yarn install
 
 COPY . /app/
 
+RUN echo "TCPSocket 3310" > /etc/clamav/clamd.conf
+RUN echo "TCPAddr av" >> /etc/clamav/clamd.conf
+
 RUN bundle exec rake assets:precompile
